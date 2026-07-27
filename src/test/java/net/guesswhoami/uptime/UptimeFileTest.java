@@ -58,4 +58,9 @@ class UptimeFileTest {
     void formatsZeroUptimeAsZeroMinutes() {
         assertEquals("0 minutes", UptimeFile.formatHuman(0));
     }
+
+    @Test
+    void formatsWholeDaysWithoutTrailingZeroHours() {
+        assertEquals("2 days", UptimeFile.formatHuman(2 * 24 * 60 * 60));
+    }
 }
