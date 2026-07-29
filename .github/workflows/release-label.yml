@@ -17,7 +17,7 @@ permissions:
 jobs:
   release-label:
     name: Release Label Check
-    uses: miikkak/workflows/.github/workflows/check-release-label.yml@main
+    uses: miikkak/workflows/.github/workflows/check-release-label.yml@435fab5b6186294629adfd88632790ab0306259f # main
     permissions:
       contents: read
       pull-requests: read
