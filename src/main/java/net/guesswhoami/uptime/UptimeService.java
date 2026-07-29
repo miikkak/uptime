@@ -29,7 +29,7 @@ final class UptimeService {
     // FileAttribute varargs - confirmed empirically that this JDK silently ignores permissions
     // requested that way and creates the file at the umask-restricted default regardless.
     private static final Set<PosixFilePermission> WORLD_READABLE_PERMISSIONS =
-            PosixFilePermissions.fromString("rw-rw-r--");
+            PosixFilePermissions.fromString("rw-r--r--");
 
     private static final Duration WRITE_INTERVAL = Duration.ofSeconds(60);
 
@@ -40,6 +40,12 @@ final class UptimeService {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final Path outputFile;
     private final Instant startedAt = Instant.now();
+
+    // System.nanoTime() is monotonic and immune to wall-clock adjustments (NTP sync, manual
+    // changes), unlike Instant.now(). Elapsed time is derived from this baseline rather than
+    // Instant.now() - startedAt, so an admin correcting the system clock can't make uptime jump
+    // or go negative.
+    private final long startNanos = System.nanoTime();
 
     UptimeService(final UptimePlugin plugin, final ProxyServer server, final Path dataDirectory, final Logger logger) {
         this.plugin = plugin;
@@ -69,7 +75,8 @@ final class UptimeService {
     }
 
     private void write() {
-        final UptimeFile snapshot = UptimeFile.of(startedAt, Instant.now());
+        final Duration elapsed = Duration.ofNanos(System.nanoTime() - startNanos);
+        final UptimeFile snapshot = UptimeFile.of(startedAt, startedAt.plus(elapsed));
         writeAtomic(outputFile, gson.toJson(snapshot));
     }
 
