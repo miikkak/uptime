@@ -24,20 +24,21 @@ dependencyLocking {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:4.0.0")
-    annotationProcessor("com.velocitypowered:velocity-api:4.0.0")
+    compileOnly("com.velocitypowered:velocity-api:4.1.0")
+    annotationProcessor("com.velocitypowered:velocity-api:4.1.0")
 
     // Not shaded - already on Velocity's own runtime classpath (Adventure's
     // GsonComponentSerializer pulls it in). Pinned to the version Gradle actually resolves
-    // velocity-api:4.0.0's own gson dependency to (verify with `./gradlew dependencies
+    // velocity-api:4.1.0's own gson dependency to (verify with `./gradlew dependencies
     // --configuration compileClasspath`) - confirmed byte-for-byte identical to the real
     // gson-2.14.0.jar by comparing class hashes against a production Velocity runtime jar.
+    // Still gson 2.14.0 after the 4.0.0 -> 4.1.0 bump, so the prior verification still holds.
     compileOnly("com.google.code.gson:gson:2.14.0")
 
     testImplementation(platform("org.junit:junit-bom:6.1.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("com.google.code.gson:gson:2.14.0")
-    testImplementation("com.velocitypowered:velocity-api:4.0.0")
+    testImplementation("com.velocitypowered:velocity-api:4.1.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
