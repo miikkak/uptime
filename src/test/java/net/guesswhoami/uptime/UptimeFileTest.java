@@ -1,7 +1,6 @@
 package net.guesswhoami.uptime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.Gson;
 import java.time.Instant;
