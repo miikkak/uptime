@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   ci-cd:
-    uses: miikkak/workflows/.github/workflows/ci-cd.yml@aabbdb405cca65c6462f605d44393b4fb90ffba2 # main
+    uses: miikkak/workflows/.github/workflows/ci-cd.yml@08d8570d1d247aa5625e3b156f21a3566da108ab # main
     with:
       code-paths: >-
         '**/*.java', '**/*.kts', 'gradle.properties', 'gradle/wrapper/**',
